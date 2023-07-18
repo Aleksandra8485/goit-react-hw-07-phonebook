@@ -24,7 +24,7 @@ export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
   async contactId => {
     const response = await fetch(
-      `https://mockapi.io/api/v1/contacts/${contactId}`,
+      `https://64b581fcf3dbab5a95c766eb.mockapi.io/contacts/${contactId}`,
       {
         method: 'DELETE',
       }
@@ -39,7 +39,9 @@ export const deleteContact = createAsyncThunk(
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts',
   async () => {
-    const response = await fetch('/api/v1/contacts');
+    const response = await fetch(
+      'https://64b581fcf3dbab5a95c766eb.mockapi.io/contacts'
+    );
     if (!response.ok) {
       throw new Error('Failed to fetch contacts.');
     }
