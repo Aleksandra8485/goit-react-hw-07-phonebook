@@ -3,13 +3,16 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const saveContact = createAsyncThunk(
   'contacts/saveContact',
   async contactData => {
-    const response = await fetch('https://mockapi.io/api/v1/contacts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(contactData),
-    });
+    const response = await fetch(
+      'https://64b581fcf3dbab5a95c766eb.mockapi.io/contacts',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contactData),
+      }
+    );
     if (!response.ok) {
       throw new Error('Failed to save contact.');
     }
