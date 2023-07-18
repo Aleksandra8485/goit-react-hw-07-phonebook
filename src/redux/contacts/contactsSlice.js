@@ -17,6 +17,33 @@ export const saveContact = createAsyncThunk(
   }
 );
 
+export const deleteContact = createAsyncThunk(
+  'contacts/deleteContact',
+  async contactId => {
+    const response = await fetch(
+      `https://mockapi.io/api/v1/contacts/${contactId}`,
+      {
+        method: 'DELETE',
+      }
+    );
+    if (!response.ok) {
+      throw new Error('Failed to delete contact.');
+    }
+    return contactId;
+  }
+);
+
+export const fetchContacts = createAsyncThunk(
+  'contacts/fetchContacts',
+  async () => {
+    const response = await fetch('/api/v1/contacts');
+    if (!response.ok) {
+      throw new Error('Failed to fetch contacts.');
+    }
+    return response.json();
+  }
+);
+
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState: {
@@ -25,7 +52,7 @@ const contactsSlice = createSlice({
     error: null,
   },
   reducers: {
-    // ... reszta reducers (jeśli jakieś są wymagane)
+    // Inne reduktory, jeśli są wymagane
   },
   extraReducers: builder => {
     builder.addCase(saveContact.pending, state => {
@@ -36,6 +63,19 @@ const contactsSlice = createSlice({
       state.contacts.push(action.payload);
     });
     builder.addCase(saveContact.rejected, (state, action) => {
+      state.status = 'failed';
+      state.error = action.error.message;
+    });
+    builder.addCase(deleteContact.pending, state => {
+      state.status = 'loading';
+    });
+    builder.addCase(deleteContact.fulfilled, (state, action) => {
+      state.status = 'succeeded';
+      state.contacts = state.contacts.filter(
+        contact => contact.id !== action.payload
+      );
+    });
+    builder.addCase(deleteContact.rejected, (state, action) => {
       state.status = 'failed';
       state.error = action.error.message;
     });
