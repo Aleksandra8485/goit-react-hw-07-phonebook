@@ -30,6 +30,8 @@ const ContactList = ({ contacts }) => {
 
 export default ContactList;
 
+// KOD ZD 6 PRZED REFAKTURYZACJA
+
 // import React from 'react';
 // import styles from './ContactList.module.css';
 

@@ -19,22 +19,24 @@ const ContactForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <input
         type="text"
         placeholder="Name"
         value={name}
         onChange={e => setName(e.target.value)}
-        className={styles.input} // Użyj klasy CSS z modułu 'styles'
+        className={styles.input}
       />
       <input
         type="text"
         placeholder="Phone Number"
         value={number}
         onChange={e => setNumber(e.target.value)}
-        className={styles.input} // Użyj klasy CSS z modułu 'styles'
+        className={styles.input}
       />
-      <button type="submit">Add Contact</button>
+      <button className={styles.addContactBtn} type="submit">
+        Add Contact
+      </button>
     </form>
   );
 };

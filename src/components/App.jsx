@@ -17,7 +17,7 @@ const App = () => {
   const filter = useSelector(state => state.contacts.filter);
 
   useEffect(() => {
-    dispatch(fetchContacts()); // Pobierz kontakty z backendu przy montowaniu komponentu
+    dispatch(fetchContacts()); // pobieranie kontaktu z backendu przy montowaniu komponentu
   }, [dispatch]);
 
   const addContact = (name, number) => {
@@ -27,16 +27,16 @@ const App = () => {
     if (existingContact) {
       alert(`${name} is already in your contacts!`);
     } else {
-      dispatch(saveContact({ name, number })); // Zapisz kontakt do backendu przy użyciu akcji saveContact
+      dispatch(saveContact({ name, number })); // zapisywanie kontaktu do backendu przy użyciu akcji saveContact
     }
   };
 
   const handleDeleteContact = contactId => {
-    dispatch(deleteContact(contactId)); // Usuń kontakt z backendu przy użyciu akcji deleteContact
+    dispatch(deleteContact(contactId)); // usuwanie kontaktu z backendu przy użyciu akcji deleteContact
   };
 
   const handleFilterChange = event => {
-    // Obsłuż zmianę filtra
+    // obsługa zmian filtra
   };
 
   const filteredContacts = contacts.filter(contact =>
