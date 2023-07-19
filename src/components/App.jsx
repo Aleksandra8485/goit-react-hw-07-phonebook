@@ -5,6 +5,7 @@ import {
   saveContact,
   deleteContact,
 } from '../redux/contacts/contactsSlice';
+import axios from 'axios';
 
 import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter/Filter';
@@ -20,19 +21,34 @@ const App = () => {
     dispatch(fetchContacts()); // pobieranie kontaktu z backendu przy montowaniu komponentu
   }, [dispatch]);
 
-  const addContact = (name, number) => {
+  const addContact = async (name, number) => {
     const existingContact = contacts.find(
       contact => contact.name.toLowerCase() === name.toLowerCase()
     );
     if (existingContact) {
       alert(`${name} is already in your contacts!`);
     } else {
-      dispatch(saveContact({ name, number })); // zapisywanie kontaktu do backendu przy użyciu akcji saveContact
+      try {
+        const response = await axios.post(
+          'https://64b581fcf3dbab5a95c766eb.mockapi.io/contacts',
+          { name, number }
+        );
+        dispatch(saveContact(response.data)); // zapisywanie kontaktu do backendu przy użyciu akcji saveContact
+      } catch (error) {
+        alert('Failed to save contact.');
+      }
     }
   };
 
-  const handleDeleteContact = contactId => {
-    dispatch(deleteContact(contactId)); // usuwanie kontaktu z backendu przy użyciu akcji deleteContact
+  const handleDeleteContact = async contactId => {
+    try {
+      await axios.delete(
+        `https://64b581fcf3dbab5a95c766eb.mockapi.io/contacts/${contactId}`
+      );
+      dispatch(deleteContact(contactId)); // usuwanie kontaktu z backendu przy użyciu akcji deleteContact
+    } catch (error) {
+      alert('Failed to delete contact.');
+    }
   };
 
   const handleFilterChange = event => {

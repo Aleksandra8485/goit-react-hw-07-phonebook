@@ -1,51 +1,46 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 export const saveContact = createAsyncThunk(
   'contacts/saveContact',
   async contactData => {
-    const response = await fetch(
-      'https://64b581fcf3dbab5a95c766eb.mockapi.io/contacts/contacts',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(contactData),
-      }
-    );
-    if (!response.ok) {
+    try {
+      const response = await axios.post(
+        'https://64b581fcf3dbab5a95c766eb.mockapi.io/contacts/contacts',
+        contactData
+      );
+      return response.data;
+    } catch (error) {
       throw new Error('Failed to save contact.');
     }
-    return response.json();
   }
 );
 
 export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
   async contactId => {
-    const response = await fetch(
-      `https://64b581fcf3dbab5a95c766eb.mockapi.io/contacts/contacts${contactId}`,
-      {
-        method: 'DELETE',
-      }
-    );
-    if (!response.ok) {
+    try {
+      await axios.delete(
+        `https://64b581fcf3dbab5a95c766eb.mockapi.io/contacts/contacts${contactId}`
+      );
+      return contactId;
+    } catch (error) {
       throw new Error('Failed to delete contact.');
     }
-    return contactId;
   }
 );
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts',
   async () => {
-    const response = await fetch(
-      'https://64b581fcf3dbab5a95c766eb.mockapi.io/contacts/contacts'
-    );
-    if (!response.ok) {
+    try {
+      const response = await axios.get(
+        'https://64b581fcf3dbab5a95c766eb.mockapi.io/contacts/contacts'
+      );
+      return response.data;
+    } catch (error) {
       throw new Error('Failed to fetch contacts.');
     }
-    return response.json();
   }
 );
 
