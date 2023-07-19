@@ -1,10 +1,18 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { deleteContact } from '../../redux/contacts/contactsSlice';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchContacts,
+  deleteContact,
+} from '../../redux/contacts/contactsSlice';
 import styles from './ContactList.module.css';
 
-const ContactList = ({ contacts }) => {
+const ContactList = () => {
   const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts.contacts);
+
+  useEffect(() => {
+    dispatch(fetchContacts()); // pobieranie kontaktów z backendu przy montowaniu komponentu
+  }, [dispatch]);
 
   const handleDelete = contactId => {
     dispatch(deleteContact(contactId));
