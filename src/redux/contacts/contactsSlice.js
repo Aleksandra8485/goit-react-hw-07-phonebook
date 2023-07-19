@@ -53,6 +53,9 @@ const contactsSlice = createSlice({
   },
   reducers: {
     // Inne reduktory, jeśli są wymagane
+    setFilter: (state, action) => {
+      state.filter = action.payload;
+    },
   },
   extraReducers: builder => {
     builder.addCase(saveContact.pending, state => {
@@ -82,4 +85,5 @@ const contactsSlice = createSlice({
   },
 });
 
+export const { setFilter } = contactsSlice.actions;
 export default contactsSlice.reducer;

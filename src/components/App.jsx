@@ -6,6 +6,7 @@ import {
   deleteContact,
 } from '../redux/contacts/contactsSlice';
 import axios from 'axios';
+import { setFilter } from '../redux/contacts/contactsSlice';
 
 import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter/Filter';
@@ -52,7 +53,8 @@ const App = () => {
   };
 
   const handleFilterChange = event => {
-    // obsługa zmian filtra
+    const { value } = event.target;
+    dispatch(setFilter(value)); // Aktualizuj stan filtra w Redux Store
   };
 
   const filteredContacts = contacts.filter(contact =>
