@@ -21,7 +21,7 @@ export const deleteContact = createAsyncThunk(
   async contactId => {
     try {
       await axios.delete(
-        `https://64b581fcf3dbab5a95c766eb.mockapi.io/contacts/contacts${contactId}`
+        `https://64b581fcf3dbab5a95c766eb.mockapi.io/contacts/contacts/${contactId}`
       );
       return contactId;
     } catch (error) {
@@ -52,7 +52,6 @@ const contactsSlice = createSlice({
     error: null,
   },
   reducers: {
-    // Inne reduktory, jeśli są wymagane
     setFilter: (state, action) => {
       state.filter = action.payload;
     },

@@ -4,9 +4,9 @@ import {
   fetchContacts,
   saveContact,
   deleteContact,
+  setFilter,
 } from '../redux/contacts/contactsSlice';
 import axios from 'axios';
-import { setFilter } from '../redux/contacts/contactsSlice';
 
 import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter/Filter';
@@ -54,12 +54,24 @@ const App = () => {
 
   const handleFilterChange = event => {
     const { value } = event.target;
-    dispatch(setFilter(value)); // Aktualizuj stan filtra w Redux Store
+    dispatch(setFilter(value)); // aktualizowanie stanu filtra w Redux Store
   };
 
-  const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
+  // Ssprawdzenie czy contacts zostało załadowane
+  if (!contacts) {
+    return <div>Loading...</div>;
+  }
+
+  // const filteredContacts = contacts.filter(contact =>
+  //   contact.name.toLowerCase().includes(filter.toLowerCase())
+  // );
+
+  // filtrowanie kontaktów i zabezpieczenie przed użyciem toLowerCase, gdy filter jest undefined
+  const filteredContacts = contacts.filter(contact => {
+    return filter
+      ? contact.name.toLowerCase().includes(filter.toLowerCase())
+      : true;
+  });
 
   return (
     <div className={styles.appContainer}>
