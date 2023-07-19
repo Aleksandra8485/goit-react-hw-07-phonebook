@@ -81,6 +81,10 @@ const contactsSlice = createSlice({
       state.status = 'failed';
       state.error = action.error.message;
     });
+    builder.addCase(fetchContacts.fulfilled, (state, action) => {
+      state.status = 'succeeded';
+      state.contacts = action.payload;
+    });
   },
 });
 
