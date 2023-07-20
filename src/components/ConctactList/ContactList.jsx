@@ -9,10 +9,17 @@ import styles from './ContactList.module.css';
 const ContactList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(state => state.contacts.contacts);
+  // Odczytaj wartość filtra ze stanu Redux
+  const filter = useSelector(state => state.contacts.filter);
 
   useEffect(() => {
     dispatch(fetchContacts()); // pobieranie kontaktów z backendu przy montowaniu komponentu
   }, [dispatch]);
+
+  // Filtruj kontakty na podstawie wartości filtra
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   const handleDelete = contactId => {
     dispatch(deleteContact(contactId));
@@ -20,7 +27,7 @@ const ContactList = () => {
 
   return (
     <ul className={styles.contactList}>
-      {contacts.map(contact => (
+      {filteredContacts.map(contact => (
         <li key={contact.id} className={styles.contactItem}>
           <span className={styles.contactName}>{contact.name}</span>
           <span className={styles.contactNumber}>{contact.number}</span>

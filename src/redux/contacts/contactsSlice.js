@@ -48,6 +48,7 @@ const contactsSlice = createSlice({
   name: 'contacts',
   initialState: {
     contacts: [],
+    filter: '',
     status: 'idle',
     error: null,
   },
