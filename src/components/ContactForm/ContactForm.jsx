@@ -12,6 +12,23 @@ const ContactForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
+    // Wprowadzenie walidacji dla imienia
+    const namePattern = /^[A-Za-z.'\- ]+$/;
+    if (!namePattern.test(name)) {
+      alert(
+        'Invalid name. Please use only letters, spaces, apostrophes, hyphens, and dots.'
+      );
+      return;
+    }
+
+    // Wprowadzenie walidacji dla numeru telefonu
+    const numberPattern =
+      /^\+?\d{1,4}?\s?\(?\d{1,4}?\)?\s?\d{1,4}\s?\d{1,4}\s?\d{1,9}$/;
+    if (!numberPattern.test(number)) {
+      alert('Invalid phone number. Please use a valid phone number format.');
+      return;
+    }
+
     dispatch(saveContact({ name, number }));
 
     setName('');
